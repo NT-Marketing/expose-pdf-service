@@ -11,11 +11,11 @@ const { html, options = {} } = req.body;
   const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'networkidle0' });
-  const pdfBuffer = await page.pdf({
-    format: options.format || 'A4',
-    printBackground: options.printBackground ?? true,
-    margin: options.margins || { top: '1cm', bottom: '1cm', left: '1.5cm', right: '1.5cm' }
-  });
+const pdfBuffer = await page.pdf({
+  format: options.format || 'A4',
+  printBackground: options.printBackground ?? true,
+  margin: options.margin || { top: '1cm', bottom: '1cm', left: '1.5cm', right: '1.5cm' },
+});
   await browser.close();
 
   res.set({
