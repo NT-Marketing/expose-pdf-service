@@ -1,6 +1,7 @@
 const express    = require('express');
 const bodyParser = require('body-parser');
 const puppeteer  = require('puppeteer');
+const executablePath = process.env.CHROME_PATH || puppeteer.executablePath();
 const app = express();
 app.use(express.json({ limit: '10mb' }));
 
@@ -8,8 +9,10 @@ app.post('/generate-pdf', async (req, res) => {
 const { html, options = {} } = req.body;
   if (!html) return res.status(400).send('Missing html');
 
-  const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
-  const page = await browser.newPage();
+const browser = await puppeteer.launch({
+  args: ['--no-sandbox'],
+  executablePath,
+});  const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'networkidle0' });
 const pdfBuffer = await page.pdf({
   format: options.format || 'A4',
