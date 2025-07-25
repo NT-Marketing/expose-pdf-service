@@ -4,12 +4,13 @@
   "description": "Microservice zur PDF-Erzeugung aus HTML via Puppeteer",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "npx puppeteer install --product=chrome"
   },
   "type": "commonjs",
   "dependencies": {
     "express": "^5.1.0",
-    "puppeteer-core": "^24.15.0"
+    "puppeteer": "^24.15.0"
   }
 }
 
